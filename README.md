@@ -32,12 +32,12 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 在Node环境中，需要使用[jsdom](https://github.com/jsdom/jsdom)或类似的库获取DOM对象的文档节点
 
 ```js
-const JSDOM = require('jsdom').JSDOM;
-const EHParser = require('eh-parser');
+  const JSDOM = require('jsdom').JSDOM;
+  const EHParser = require('eh-parser');
 
-const document = new JSDOM(/* E站搜索结果页面的HTML文本 */).window.document;
-const data = EHParser.parseGalleryPage(document);
-console.log(data);
+  const document = new JSDOM(/* E站搜索结果页面的HTML文本 */).window.document;
+  const data = EHParser.parseGalleryPage(document);
+  console.log(data);
 ```
 
 ## API
@@ -176,8 +176,8 @@ console.log(data);
 `reloadCode`字段用于生成页面中`Click here if the image fails loading`的链接：
 
 ```js
-const imagePageURL = 'https://exhentai.org/s/594b7edc82/1183625-31';
-const reloadURL    = imagePageURL + (imagePageURL.indexOf('?') > -1 ? '&' : '?') + 'nl=' + reloadCode;
+  const imagePageURL = 'https://exhentai.org/s/594b7edc82/1183625-31';
+  const reloadURL    = imagePageURL + (imagePageURL.indexOf('?') > -1 ? '&' : '?') + 'nl=' + reloadCode;
 ```
 
 ## 异常
