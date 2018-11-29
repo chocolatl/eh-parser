@@ -1,7 +1,7 @@
 class EHParser {
   /**
    * 解析搜索结果页面数据
-   * @param {string} document 搜索结果页面的document对象
+   * @param {object} document 搜索结果页面的document对象
    * @return {object}
    */
   static parseSearchPage(document) {
@@ -74,7 +74,7 @@ class EHParser {
 
   /**
    * 解析画廊页面数据
-   * @param {string} document 画廊页面的document对象
+   * @param {object} document 画廊页面的document对象
    * @return {object}
    */
   static parseGalleryPage(document) {
@@ -231,7 +231,7 @@ class EHParser {
 
   /**
    * 解析图片页面数据
-   * @param {string} document 图片页面的document对象
+   * @param {object} document 图片页面的document对象
    * @return {object}
    */
   static parsePicturePage(document) {
