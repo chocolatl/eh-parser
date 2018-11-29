@@ -83,7 +83,7 @@ console.log(data);
     "category": "non-h",
     "uploader": "囧途末路",
     "posted": "2018-02-11 13:05",
-    "parent": "https://e-hentai.org/g/1161712/7d773196aa/",
+    "parent": "https://exhentai.org/g/1161712/7d773196aa/",
     "visible": "No (Replaced)",
     "language": "Japanese  ",
     "fileSize": "182.2 MB",
@@ -105,12 +105,12 @@ console.log(data);
   },
   "newerVersions": [
     {
-      "url": "https://e-hentai.org/g/1205262/5bc2e2c3a6/",
+      "url": "https://exhentai.org/g/1205262/5bc2e2c3a6/",
       "title": "さざなみみぉ pixiv作品合集（不定期更新）",
       "posted": "2018-03-31 04:49"
     },
     {
-      "url": "https://e-hentai.org/g/1230782/a41bc04e18/",
+      "url": "https://exhentai.org/g/1230782/a41bc04e18/",
       "title": "さざなみみぉ pixiv作品合集（不定期更新）",
       "posted": "2018-05-27 05:09"
     },
@@ -140,12 +140,12 @@ console.log(data);
     "mode": "large",        // mode为"normal"或"large"，与账号设置有关
     "list": [
       {
-        "url": "https://e-hentai.org/s/051cedd008/1183625-1",
+        "url": "https://exhentai.org/s/051cedd008/1183625-1",
         "thumb": "https://ehgt.org/05/1c/051cedd0089ebce224b14ccc98ba89d67ff3f284-954244-800-1119-jpg_l.jpg"    // thumb仅在mode为"large"时存在
       },
       {
-        "url": "https://e-hentai.org/s/11286cf784/1183625-2",
-        "thumb": "https://ehgt.org/11/28/11286cf7840f1726cdda95f619aaacd7d5a1f9fe-1190142-800-1125-jpg_l.jpg"
+        "url": "https://exhentai.org/s/11286cf784/1183625-2",
+        "thumb": "https://ehgt.org/11/28/11286cf7840f1726cdda95f619aaacd7d5a1f9fex1190142-800-1125-jpg_l.jpg"
       },
       // ...
     ]
@@ -164,8 +164,8 @@ console.log(data);
 ```js
 {
   "image": "http://144.197.142.91:8484/h/647afa68f7a97d990f360262f0e3bab872fbd501-216944-900-900-jpg/keystamp=1543465500-a9c0673140;fileindex=24684240;xres=2400/Masterpiece.jpg",
-  "original": "https://e-hentai.org/fullimg.php?gid=1316052&page=3&key=0cz2qum96tg",    // 原图下载链接，不存在时为null
-  "next": "https://e-hentai.org/s/eeda3df9cf/1316052-4",                                // 下一张图片的页面
+  "original": "https://exhentai.org/fullimg.php?gid=1316052&page=3&key=0cz2qum96tg",    // 原图下载链接，不存在时为null
+  "next": "https://exhentai.org/s/eeda3df9cf/1316052-4",                                // 下一张图片的页面
   "curPage": 4,     // 当前页码，页码从1开始
   "maxPage": 220,   // 最大页码，页码从1开始
   "reloadCode": "23626-428740",
