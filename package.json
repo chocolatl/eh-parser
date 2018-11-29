@@ -1,0 +1,25 @@
+{
+  "name": "eh-parser",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dest/eh-parser.js",
+  "scripts": {
+    "build": "babel ./src/eh-parser.js -o ./dest/eh-parser.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chocolatl/eh-parser.git"
+  },
+  "author": "chocolatl",
+  "license": "GLWT",
+  "bugs": {
+    "url": "https://github.com/Chocolatl/eh-parser/issues"
+  },
+  "homepage": "https://github.com/Chocolatl/eh-parser",
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6"
+  }
+}
