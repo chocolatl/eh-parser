@@ -30,7 +30,7 @@ function () {
 
     /**
      * 解析搜索结果页面数据
-     * @param {string} document 搜索结果页面的document对象
+     * @param {object} document 搜索结果页面的document对象
      * @return {object}
      */
     value: function parseSearchPage(document) {
@@ -82,7 +82,8 @@ function () {
           var title = el.querySelector('.it5 > a').textContent;
           var cover = getListModeCover(el);
           var category = last(el.querySelector('.itdc > a').href.split('/'));
-          var posted = el.querySelector('.itd').textContent; // 根据星星图片获取大致的评分
+          var posted = el.querySelector('.itd').textContent;
+          var uploader = el.querySelector('.itu').textContent; // 根据星星图片获取大致的评分
 
           var pos = el.querySelector('.it4r').style.backgroundPosition;
 
@@ -98,7 +99,8 @@ function () {
             url: url,
             cover: cover,
             category: category,
-            rating: rating
+            rating: rating,
+            uploader: uploader
           };
         });
       }
@@ -114,7 +116,7 @@ function () {
     }
     /**
      * 解析画廊页面数据
-     * @param {string} document 画廊页面的document对象
+     * @param {object} document 画廊页面的document对象
      * @return {object}
      */
 
@@ -309,7 +311,7 @@ function () {
     }
     /**
      * 解析图片页面数据
-     * @param {string} document 图片页面的document对象
+     * @param {object} document 图片页面的document对象
      * @return {object}
      */
 

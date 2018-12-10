@@ -59,7 +59,8 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
       "url": "https://exhentai.org/g/1319745/713400a20b/",
       "cover": "https://exhentai.org/t/60/8f/608f41dd673776c1a47c0ca70275f98342c6884f-2697059-2116-3000-jpg_l.jpg",
       "category": "doujinshi",
-      "rating": 4.5     // 评分精度为0.5
+      "rating": 4.5,     // 评分精度为0.5
+      "uploader": "BlossomPlus"
     },
     // ...
   ]

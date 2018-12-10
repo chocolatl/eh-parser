@@ -55,13 +55,14 @@ class EHParser {
         const cover = getListModeCover(el);
         const category = last(el.querySelector('.itdc > a').href.split('/'));
         const posted = el.querySelector('.itd').textContent;
+        const uploader = el.querySelector('.itu').textContent;
 
         // 根据星星图片获取大致的评分
         const pos = el.querySelector('.it4r').style.backgroundPosition;
         const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
         const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
 
-        return {title, posted, url, cover, category, rating};
+        return {title, posted, url, cover, category, rating, uploader};
       });
     }
 
