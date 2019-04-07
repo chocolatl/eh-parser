@@ -1,3 +1,11 @@
+const getCategory = (el) => {
+  const last = arr => arr[arr.length - 1];
+  const onClickCode = el.getAttribute('onclick');
+  const url = /document\.location='(.*)'/.exec(onClickCode)[1];
+  const category = last(url.split('/'));
+  return category;
+}
+
 class EHParser {
   /**
    * 解析搜索结果页面数据
@@ -5,8 +13,6 @@ class EHParser {
    * @return {object}
    */
   static parseSearchPage(document) {
-    const last = arr => arr[arr.length - 1];
-
     const getPageNum = href => {
       const r = /(?:\?|&)?page=(\d+)/.exec(href);
       return r ? +r[1] : 0;   // 搜索结果第一页可能没有page参数，r为null
@@ -31,34 +37,25 @@ class EHParser {
     }
 
     function getListModeCover(el) {
-      // 提取缩略图地址参照E站主页show_image_pane和load_pane_image函数的代码
-      const linkHTML = el.querySelector('.it5 > a').outerHTML;
-      const id = /onmouseover="show_image_pane\((\d+)\)"/.exec(linkHTML)[1];
-      const parts = document.getElementById('i' + id).textContent.split('~');
-  
-      if (parts.length >= 4) {
-        return parts[0].replace('init', 'http') + '://' + parts[1] + '/' + parts[2];
-      } else {
-        // 搜索结果首张缩略图是已经加载出来的，这时parts.length < 4，document.getElementById('i' + id)获得的是包裹缩略图的元素
-        return document.getElementById('i' + id).querySelector('img').src;
-      }
+      const thumb = el.querySelector('.glthumb > div:first-of-type > img');
+      return thumb.getAttribute('data-src') || thumb.getAttribute('src')
     }
 
     // 显示模式与账号设置有关，默认为列表模式，当账号设置为略缩图模式时该方法无法正常工作
     // 搜索结果为空时返回空数组
     function getListModeResults() {
-      const items = [].slice.call(document.querySelectorAll('.gtr0, .gtr1'));
+      const items = [].slice.call(document.querySelectorAll('.itg.gltm tr')).slice(1);
 
       return items.map(el => {
-        const url   = el.querySelector('.it5 > a').href;
-        const title = el.querySelector('.it5 > a').textContent;
+        const url   = el.querySelector('.glname > a').href;
+        const title = el.querySelector('.glname > a').textContent;
         const cover = getListModeCover(el);
-        const category = last(el.querySelector('.itdc > a').href.split('/'));
-        const posted = el.querySelector('.itd').textContent;
-        const uploader = el.querySelector('.itu').textContent;
+        const category = getCategory(el.querySelector('.gl1m > div'));
+        const posted = el.querySelector('.gl2m > div:last-of-type').textContent;
+        const uploader = el.querySelector('.gl5m').textContent;
 
         // 根据星星图片获取大致的评分
-        const pos = el.querySelector('.it4r').style.backgroundPosition;
+        const pos = el.querySelector('.gl4m > div').style.backgroundPosition;
         const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
         const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
 
@@ -79,8 +76,6 @@ class EHParser {
    * @return {object}
    */
   static parseGalleryPage(document) {
-    const last = arr => arr[arr.length - 1];
-
     const getPageNum = href => {
       const r = /(?:\?|&)?p=(\d+)/.exec(href);
       return r ? +r[1] : 0;   // 搜索结果第一页可能没有p参数，r为null
@@ -140,7 +135,7 @@ class EHParser {
         ntitle: document.getElementById('gn').textContent,
         jtitle: document.getElementById('gj').textContent,
         cover: getCSSUrl(document.querySelector('#gd1 > div').outerHTML),
-        category: last(document.querySelector('#gdc > a').href.split('/')),
+        category: getCategory(document.querySelector('#gdc > div')),
         uploader: document.querySelector('#gdn > a').textContent,
         ...getBaseInfo(),
         ...getRating(),

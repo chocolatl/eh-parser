@@ -18,6 +18,17 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var getCategory = function getCategory(el) {
+  var last = function last(arr) {
+    return arr[arr.length - 1];
+  };
+
+  var onClickCode = el.getAttribute('onclick');
+  var url = /document\.location='(.*)'/.exec(onClickCode)[1];
+  var category = last(url.split('/'));
+  return category;
+};
+
 var EHParser =
 /*#__PURE__*/
 function () {
@@ -34,10 +45,6 @@ function () {
      * @return {object}
      */
     value: function parseSearchPage(document) {
-      var last = function last(arr) {
-        return arr[arr.length - 1];
-      };
-
       var getPageNum = function getPageNum(href) {
         var r = /(?:\?|&)?page=(\d+)/.exec(href);
         return r ? +r[1] : 0; // 搜索结果第一页可能没有page参数，r为null
@@ -60,32 +67,23 @@ function () {
       }
 
       function getListModeCover(el) {
-        // 提取缩略图地址参照E站主页show_image_pane和load_pane_image函数的代码
-        var linkHTML = el.querySelector('.it5 > a').outerHTML;
-        var id = /onmouseover="show_image_pane\((\d+)\)"/.exec(linkHTML)[1];
-        var parts = document.getElementById('i' + id).textContent.split('~');
-
-        if (parts.length >= 4) {
-          return parts[0].replace('init', 'http') + '://' + parts[1] + '/' + parts[2];
-        } else {
-          // 搜索结果首张缩略图是已经加载出来的，这时parts.length < 4，document.getElementById('i' + id)获得的是包裹缩略图的元素
-          return document.getElementById('i' + id).querySelector('img').src;
-        }
+        var thumb = el.querySelector('.glthumb > div:first-of-type > img');
+        return thumb.getAttribute('data-src') || thumb.getAttribute('src');
       } // 显示模式与账号设置有关，默认为列表模式，当账号设置为略缩图模式时该方法无法正常工作
       // 搜索结果为空时返回空数组
 
 
       function getListModeResults() {
-        var items = [].slice.call(document.querySelectorAll('.gtr0, .gtr1'));
+        var items = [].slice.call(document.querySelectorAll('.itg.gltm tr')).slice(1);
         return items.map(function (el) {
-          var url = el.querySelector('.it5 > a').href;
-          var title = el.querySelector('.it5 > a').textContent;
+          var url = el.querySelector('.glname > a').href;
+          var title = el.querySelector('.glname > a').textContent;
           var cover = getListModeCover(el);
-          var category = last(el.querySelector('.itdc > a').href.split('/'));
-          var posted = el.querySelector('.itd').textContent;
-          var uploader = el.querySelector('.itu').textContent; // 根据星星图片获取大致的评分
+          var category = getCategory(el.querySelector('.gl1m > div'));
+          var posted = el.querySelector('.gl2m > div:last-of-type').textContent;
+          var uploader = el.querySelector('.gl5m').textContent; // 根据星星图片获取大致的评分
 
-          var pos = el.querySelector('.it4r').style.backgroundPosition;
+          var pos = el.querySelector('.gl4m > div').style.backgroundPosition;
 
           var _$exec = /(\-?\d+)px (\-?\d+)px/.exec(pos),
               _$exec2 = _slicedToArray(_$exec, 3),
@@ -123,10 +121,6 @@ function () {
   }, {
     key: "parseGalleryPage",
     value: function parseGalleryPage(document) {
-      var last = function last(arr) {
-        return arr[arr.length - 1];
-      };
-
       var getPageNum = function getPageNum(href) {
         var r = /(?:\?|&)?p=(\d+)/.exec(href);
         return r ? +r[1] : 0; // 搜索结果第一页可能没有p参数，r为null
@@ -201,7 +195,7 @@ function () {
           ntitle: document.getElementById('gn').textContent,
           jtitle: document.getElementById('gj').textContent,
           cover: getCSSUrl(document.querySelector('#gd1 > div').outerHTML),
-          category: last(document.querySelector('#gdc > a').href.split('/')),
+          category: getCategory(document.querySelector('#gdc > div')),
           uploader: document.querySelector('#gdn > a').textContent
         }, getBaseInfo(), getRating(), {
           tags: getTags()
