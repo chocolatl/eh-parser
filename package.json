@@ -1,6 +1,6 @@
 {
   "name": "eh-parser",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dest/eh-parser.js",
   "scripts": {

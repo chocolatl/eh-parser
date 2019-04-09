@@ -48,7 +48,14 @@ function () {
       var getPageNum = function getPageNum(href) {
         var r = /(?:\?|&)?page=(\d+)/.exec(href);
         return r ? +r[1] : 0; // 搜索结果第一页可能没有page参数，r为null
-      }; // 搜索结果为空时返回-1
+      };
+
+      function getDisplayMode() {
+        var modes = ['Minimal', 'Minimal+', 'Compact', 'Extended', 'Thumbnail'];
+        var mode = document.querySelector('#dms [selected]').textContent;
+        if (modes.indexOf(mode) == -1) throw new Error('Unknown display mode');
+        return mode;
+      } // 搜索结果为空时返回-1
 
 
       function getCurPage() {
@@ -64,33 +71,87 @@ function () {
 
         if (len === 0) return -1;
         if (isLast) return getPageNum(links[len - 1].href);else return getPageNum(links[len - 2].href);
+      } // 根据星星图片获取大致的评分
+
+
+      function getRating(el) {
+        var pos = el.style.backgroundPosition;
+
+        var _$exec = /(\-?\d+)px (\-?\d+)px/.exec(pos),
+            _$exec2 = _slicedToArray(_$exec, 3),
+            left = _$exec2[1],
+            top = _$exec2[2];
+
+        var rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
+        return rating;
       }
 
       function getListModeCover(el) {
         var thumb = el.querySelector('.glthumb > div:first-of-type > img');
         return thumb.getAttribute('data-src') || thumb.getAttribute('src');
-      } // 显示模式与账号设置有关，默认为列表模式，当账号设置为略缩图模式时该方法无法正常工作
-      // 搜索结果为空时返回空数组
+      } // 获取Minimal、Minimal+、Compact模式下的搜索结果
 
 
       function getListModeResults() {
-        var items = [].slice.call(document.querySelectorAll('.itg.gltm tr')).slice(1);
+        var items = [].slice.call(document.querySelectorAll('.itg tr')).slice(1);
         return items.map(function (el) {
           var url = el.querySelector('.glname > a').href;
-          var title = el.querySelector('.glname > a').textContent;
+          var title = el.querySelector('.glname > a > div:first-of-type').textContent;
           var cover = getListModeCover(el);
-          var category = getCategory(el.querySelector('.gl1m > div'));
-          var posted = el.querySelector('.gl2m > div:last-of-type').textContent;
-          var uploader = el.querySelector('.gl5m').textContent; // 根据星星图片获取大致的评分
+          var category = getCategory(el.querySelector('td:nth-of-type(1) > div'));
+          var posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
+          var rating = getRating(el.querySelector('.ir'));
+          var uploader = el.querySelector('td:last-of-type > div:first-of-type').textContent;
+          return {
+            title: title,
+            posted: posted,
+            url: url,
+            cover: cover,
+            category: category,
+            rating: rating,
+            uploader: uploader
+          };
+        });
+      } // 获取Extended模式下的搜索结果
 
-          var pos = el.querySelector('.gl4m > div').style.backgroundPosition;
 
-          var _$exec = /(\-?\d+)px (\-?\d+)px/.exec(pos),
-              _$exec2 = _slicedToArray(_$exec, 3),
-              left = _$exec2[1],
-              top = _$exec2[2];
+      function getExtendedModeResults() {
+        var items = [].slice.call(document.querySelectorAll('.itg > tbody > tr'));
+        return items.map(function (el) {
+          var td1 = el.querySelector('td:nth-of-type(1)');
+          var td2 = el.querySelector('td:nth-of-type(2)');
+          var gl3es = td2.querySelectorAll('.gl3e > div');
+          var url = td1.querySelector('a').href;
+          var title = td1.querySelector('a > img').title;
+          var cover = td1.querySelector('a > img').src;
+          var category = getCategory(gl3es[0]);
+          var posted = gl3es[1].textContent;
+          var rating = getRating(gl3es[2]);
+          var uploader = gl3es[3].textContent;
+          return {
+            title: title,
+            posted: posted,
+            url: url,
+            cover: cover,
+            category: category,
+            rating: rating,
+            uploader: uploader
+          };
+        });
+      } // 获取Thumbnail模式下的搜索结果
 
-          var rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
+
+      function getThumbnailModeResults() {
+        var items = [].slice.call(document.querySelectorAll('.itg > div'));
+        return items.map(function (el) {
+          var url = el.children[0].href;
+          var title = el.children[0].textContent;
+          var cover = el.querySelector('.gl3t img').src;
+          var category = getCategory(el.querySelector('.gl5t .cs'));
+          var posted = el.querySelector('.gl5t .cs').nextElementSibling.textContent;
+          var rating = getRating(el.querySelector('.gl5t .ir'));
+          var uploader = ''; // Thumbnail模式下没有uploader信息
+
           return {
             title: title,
             posted: posted,
@@ -103,12 +164,27 @@ function () {
         });
       }
 
+      function getResults() {
+        switch (getDisplayMode()) {
+          case 'Minimal':
+          case 'Minimal+':
+          case 'Compact':
+            return getListModeResults();
+
+          case 'Extended':
+            return getExtendedModeResults();
+
+          case 'Thumbnail':
+            return getThumbnailModeResults();
+        }
+      }
+
       return {
         curPage: getCurPage(),
         // 当前页码，页码从0开始
         maxPage: getMaxPage(),
         // 最大页码，页码从0开始
-        results: getListModeResults() // 当前页面搜索结果
+        results: getResults() // 当前页面搜索结果
 
       };
     }

@@ -18,6 +18,13 @@ class EHParser {
       return r ? +r[1] : 0;   // 搜索结果第一页可能没有page参数，r为null
     };
 
+    function getDisplayMode() {
+      const modes = ['Minimal', 'Minimal+', 'Compact', 'Extended', 'Thumbnail'];
+      const mode = document.querySelector('#dms [selected]').textContent;
+      if(modes.indexOf(mode) == -1) throw new Error('Unknown display mode');
+      return mode;
+    }
+
     // 搜索结果为空时返回-1
     function getCurPage() {
       const link = document.querySelector('.ptt .ptds > a');
@@ -36,37 +43,91 @@ class EHParser {
       else return getPageNum(links[len - 2].href);
     }
 
+    // 根据星星图片获取大致的评分
+    function getRating(el) {
+        const pos = el.style.backgroundPosition;
+        const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
+        const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
+        return rating;
+    }
+
     function getListModeCover(el) {
       const thumb = el.querySelector('.glthumb > div:first-of-type > img');
       return thumb.getAttribute('data-src') || thumb.getAttribute('src')
     }
 
-    // 显示模式与账号设置有关，默认为列表模式，当账号设置为略缩图模式时该方法无法正常工作
-    // 搜索结果为空时返回空数组
+    // 获取Minimal、Minimal+、Compact模式下的搜索结果
     function getListModeResults() {
-      const items = [].slice.call(document.querySelectorAll('.itg.gltm tr')).slice(1);
+      const items = [].slice.call(document.querySelectorAll('.itg tr')).slice(1);
 
       return items.map(el => {
         const url   = el.querySelector('.glname > a').href;
-        const title = el.querySelector('.glname > a').textContent;
+        const title = el.querySelector('.glname > a > div:first-of-type').textContent;
         const cover = getListModeCover(el);
-        const category = getCategory(el.querySelector('.gl1m > div'));
-        const posted = el.querySelector('.gl2m > div:last-of-type').textContent;
-        const uploader = el.querySelector('.gl5m').textContent;
-
-        // 根据星星图片获取大致的评分
-        const pos = el.querySelector('.gl4m > div').style.backgroundPosition;
-        const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
-        const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
+        const category = getCategory(el.querySelector('td:nth-of-type(1) > div'));
+        const posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
+        const rating = getRating(el.querySelector('.ir'));
+        const uploader = el.querySelector('td:last-of-type > div:first-of-type').textContent;
 
         return {title, posted, url, cover, category, rating, uploader};
       });
     }
 
+    // 获取Extended模式下的搜索结果
+    function getExtendedModeResults() {
+      const items = [].slice.call(document.querySelectorAll('.itg > tbody > tr'));
+
+      return items.map(el => {
+        const td1 = el.querySelector('td:nth-of-type(1)');
+        const td2 = el.querySelector('td:nth-of-type(2)');
+        const gl3es = td2.querySelectorAll('.gl3e > div');
+
+        const url   = td1.querySelector('a').href;
+        const title = td1.querySelector('a > img').title;
+        const cover = td1.querySelector('a > img').src;
+        const category = getCategory(gl3es[0]);
+        const posted   = gl3es[1].textContent;
+        const rating   = getRating(gl3es[2]);
+        const uploader = gl3es[3].textContent;
+
+        return {title, posted, url, cover, category, rating, uploader};
+      });
+    }
+
+    // 获取Thumbnail模式下的搜索结果
+    function getThumbnailModeResults() {
+      const items = [].slice.call(document.querySelectorAll('.itg > div'));
+
+      return items.map(el => {
+        const url   = el.children[0].href;
+        const title = el.children[0].textContent;
+        const cover = el.querySelector('.gl3t img').src;
+        const category = getCategory(el.querySelector('.gl5t .cs'));
+        const posted   = el.querySelector('.gl5t .cs').nextElementSibling.textContent;
+        const rating   = getRating(el.querySelector('.gl5t .ir'));
+        const uploader = '';    // Thumbnail模式下没有uploader信息
+
+        return {title, posted, url, cover, category, rating, uploader};
+      });
+    }
+
+    function getResults() {
+      switch(getDisplayMode()) {
+        case 'Minimal':
+        case 'Minimal+':
+        case 'Compact':
+          return getListModeResults();
+        case 'Extended':
+          return getExtendedModeResults();
+        case 'Thumbnail':
+          return getThumbnailModeResults();
+      }
+    }
+
     return {
-      curPage: getCurPage(),          // 当前页码，页码从0开始
-      maxPage: getMaxPage(),          // 最大页码，页码从0开始
-      results: getListModeResults()   // 当前页面搜索结果
+      curPage: getCurPage(),  // 当前页码，页码从0开始
+      maxPage: getMaxPage(),  // 最大页码，页码从0开始
+      results: getResults()   // 当前页面搜索结果
     };
   }
 
