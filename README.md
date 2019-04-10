@@ -50,6 +50,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 
 ```js
 {
+  "mode": "Minimal+",
   "curPage": 0,         // 当前页码，页码从0开始，搜索结果为空时返回-1
   "maxPage": 25310,     // 最大页码，页码从0开始，搜索结果为空时返回-1
   "results": [          // 当前页面的搜索结果
@@ -58,7 +59,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
       "posted": "2018-11-25 15:17",
       "url": "https://exhentai.org/g/1319745/713400a20b/",
       "cover": "https://exhentai.org/t/60/8f/608f41dd673776c1a47c0ca70275f98342c6884f-2697059-2116-3000-jpg_l.jpg",
-      "category": "doujinshi",
+      "category": "Doujinshi",
       "rating": 4.5,     // 评分精度为0.5
       "uploader": "BlossomPlus"     // 该字段在Thumbnail模式下为空字符串
     },
@@ -81,7 +82,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "ntitle": "さざなみみぉ pixiv作品合集",
     "jtitle": "",
     "cover": "https://ehgt.org/t/05/1c/051cedd0089ebce224b14ccc98ba89d67ff3f284-954244-800-1119-jpg_250.jpg",
-    "category": "non-h",
+    "category": "Non-H",
     "uploader": "囧途末路",
     "posted": "2018-02-11 13:05",
     "parent": "https://exhentai.org/g/1161712/7d773196aa/",
