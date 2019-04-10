@@ -18,17 +18,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var getCategory = function getCategory(el) {
-  var last = function last(arr) {
-    return arr[arr.length - 1];
-  };
-
-  var onClickCode = el.getAttribute('onclick');
-  var url = /document\.location='(.*)'/.exec(onClickCode)[1];
-  var category = last(url.split('/'));
-  return category;
-};
-
 var EHParser =
 /*#__PURE__*/
 function () {
@@ -98,7 +87,7 @@ function () {
           var url = el.querySelector('.glname > a').href;
           var title = el.querySelector('.glname > a > div:first-of-type').textContent;
           var cover = getListModeCover(el);
-          var category = getCategory(el.querySelector('td:nth-of-type(1) > div'));
+          var category = el.querySelector('td:nth-of-type(1) > div').textContent;
           var posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
           var rating = getRating(el.querySelector('.ir'));
           var uploader = el.querySelector('td:last-of-type > div:first-of-type').textContent;
@@ -124,7 +113,7 @@ function () {
           var url = td1.querySelector('a').href;
           var title = td1.querySelector('a > img').title;
           var cover = td1.querySelector('a > img').src;
-          var category = getCategory(gl3es[0]);
+          var category = gl3es[0].textContent;
           var posted = gl3es[1].textContent;
           var rating = getRating(gl3es[2]);
           var uploader = gl3es[3].textContent;
@@ -147,7 +136,7 @@ function () {
           var url = el.children[0].href;
           var title = el.children[0].textContent;
           var cover = el.querySelector('.gl3t img').src;
-          var category = getCategory(el.querySelector('.gl5t .cs'));
+          var category = el.querySelector('.gl5t .cs').textContent;
           var posted = el.querySelector('.gl5t .cs').nextElementSibling.textContent;
           var rating = getRating(el.querySelector('.gl5t .ir'));
           var uploader = ''; // Thumbnail模式下没有uploader信息
@@ -272,7 +261,7 @@ function () {
           ntitle: document.getElementById('gn').textContent,
           jtitle: document.getElementById('gj').textContent,
           cover: getCSSUrl(document.querySelector('#gd1 > div').outerHTML),
-          category: getCategory(document.querySelector('#gdc > div')),
+          category: document.querySelector('#gdc > div').textContent,
           uploader: document.querySelector('#gdn > a').textContent
         }, getBaseInfo(), getRating(), {
           tags: getTags()

@@ -1,11 +1,3 @@
-const getCategory = (el) => {
-  const last = arr => arr[arr.length - 1];
-  const onClickCode = el.getAttribute('onclick');
-  const url = /document\.location='(.*)'/.exec(onClickCode)[1];
-  const category = last(url.split('/'));
-  return category;
-}
-
 class EHParser {
   /**
    * 解析搜索结果页面数据
@@ -64,7 +56,7 @@ class EHParser {
         const url   = el.querySelector('.glname > a').href;
         const title = el.querySelector('.glname > a > div:first-of-type').textContent;
         const cover = getListModeCover(el);
-        const category = getCategory(el.querySelector('td:nth-of-type(1) > div'));
+        const category = el.querySelector('td:nth-of-type(1) > div').textContent;
         const posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
         const rating = getRating(el.querySelector('.ir'));
         const uploader = el.querySelector('td:last-of-type > div:first-of-type').textContent;
@@ -85,7 +77,7 @@ class EHParser {
         const url   = td1.querySelector('a').href;
         const title = td1.querySelector('a > img').title;
         const cover = td1.querySelector('a > img').src;
-        const category = getCategory(gl3es[0]);
+        const category = gl3es[0].textContent;
         const posted   = gl3es[1].textContent;
         const rating   = getRating(gl3es[2]);
         const uploader = gl3es[3].textContent;
@@ -102,7 +94,7 @@ class EHParser {
         const url   = el.children[0].href;
         const title = el.children[0].textContent;
         const cover = el.querySelector('.gl3t img').src;
-        const category = getCategory(el.querySelector('.gl5t .cs'));
+        const category = el.querySelector('.gl5t .cs').textContent;
         const posted   = el.querySelector('.gl5t .cs').nextElementSibling.textContent;
         const rating   = getRating(el.querySelector('.gl5t .ir'));
         const uploader = '';    // Thumbnail模式下没有uploader信息
@@ -197,7 +189,7 @@ class EHParser {
         ntitle: document.getElementById('gn').textContent,
         jtitle: document.getElementById('gj').textContent,
         cover: getCSSUrl(document.querySelector('#gd1 > div').outerHTML),
-        category: getCategory(document.querySelector('#gdc > div')),
+        category: document.querySelector('#gdc > div').textContent,
         uploader: document.querySelector('#gdn > a').textContent,
         ...getBaseInfo(),
         ...getRating(),
