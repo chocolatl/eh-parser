@@ -125,6 +125,7 @@ class EHParser {
     }
 
     return {
+      mode: getDisplayMode(),
       curPage: getCurPage(),  // 当前页码，页码从0开始
       maxPage: getMaxPage(),  // 最大页码，页码从0开始
       results: getResults()   // 当前页面搜索结果

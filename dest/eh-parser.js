@@ -180,6 +180,7 @@ function () {
       }
 
       return {
+        mode: getDisplayMode(),
         curPage: getCurPage(),
         // 当前页码，页码从0开始
         maxPage: getMaxPage(),
