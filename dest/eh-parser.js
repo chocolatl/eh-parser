@@ -60,6 +60,15 @@ function () {
 
         if (len === 0) return -1;
         if (isLast) return getPageNum(links[len - 1].href);else return getPageNum(links[len - 2].href);
+      }
+
+      function getPrevNextLink() {
+        var prevEl = document.querySelector('.ptt td:first-child > a');
+        var nextEl = document.querySelector('.ptt td:last-child > a');
+        return {
+          prev: prevEl ? prevEl.href : null,
+          next: nextEl ? nextEl.href : null
+        };
       } // 根据星星图片获取大致的评分
 
 
@@ -168,15 +177,16 @@ function () {
         }
       }
 
-      return {
+      return _objectSpread({
         mode: getDisplayMode(),
         curPage: getCurPage(),
         // 当前页码，页码从0开始
-        maxPage: getMaxPage(),
-        // 最大页码，页码从0开始
+        maxPage: getMaxPage()
+      }, getPrevNextLink(), {
+        // prev, next
         results: getResults() // 当前页面搜索结果
 
-      };
+      });
     }
     /**
      * 解析画廊页面数据

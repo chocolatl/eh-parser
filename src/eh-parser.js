@@ -35,6 +35,15 @@ class EHParser {
       else return getPageNum(links[len - 2].href);
     }
 
+    function getPrevNextLink() {
+      const prevEl = document.querySelector('.ptt td:first-child > a');
+      const nextEl = document.querySelector('.ptt td:last-child > a');
+      return {
+        prev: prevEl ? prevEl.href : null,
+        next: nextEl ? nextEl.href : null
+      };
+    }
+
     // 根据星星图片获取大致的评分
     function getRating(el) {
         const pos = el.style.backgroundPosition;
@@ -120,6 +129,7 @@ class EHParser {
       mode: getDisplayMode(),
       curPage: getCurPage(),  // 当前页码，页码从0开始
       maxPage: getMaxPage(),  // 最大页码，页码从0开始
+      ...getPrevNextLink(),   // prev, next
       results: getResults()   // 当前页面搜索结果
     };
   }
