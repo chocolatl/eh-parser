@@ -70,7 +70,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 }
 ```
 
-注意：搜索结果为空（No hits found）时会解析失败抛出异常
+注意：搜索结果为空（'No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'等情况）时会解析失败抛出异常
 
 ### EHParser.parseGalleryPage(document)
 
