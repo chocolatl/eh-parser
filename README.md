@@ -70,6 +70,8 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 }
 ```
 
+注意：搜索结果为空（No hits found）时会解析失败抛出异常
+
 ### EHParser.parseGalleryPage(document)
 
 解析画廊页面数据，如：https://exhentai.org/g/1183625/18725a8da6
