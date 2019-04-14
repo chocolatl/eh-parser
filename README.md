@@ -51,8 +51,8 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 ```js
 {
   "mode": "Minimal+",
-  "curPage": 0,         // 当前页码，页码从0开始，搜索结果为空时返回-1
-  "maxPage": 25310,     // 最大页码，页码从0开始，搜索结果为空时返回-1
+  "curPage": 0,         // 当前页码，页码从0开始
+  "maxPage": 25310,     // 最大页码，页码从0开始
   "prev": null,         // 搜索结果的上一页链接
   "next": "https://exhentai.org/?page=1",   // 搜索结果的下一页链接
   "results": [          // 当前页面的搜索结果
