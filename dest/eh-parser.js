@@ -34,6 +34,17 @@ function () {
      * @return {object}
      */
     value: function parseSearchPage(document) {
+      var noPaging = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var messages = ['No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'];
+
+      for (var _i = 0; _i < messages.length; _i++) {
+        var msg = messages[_i];
+
+        if (document.body.textContent.includes(msg)) {
+          throw new Error(msg);
+        }
+      }
+
       var getPageNum = function getPageNum(href) {
         var r = /(?:\?|&)?page=(\d+)/.exec(href);
         return r ? +r[1] : 0; // 搜索结果第一页可能没有page参数，r为null
@@ -44,13 +55,15 @@ function () {
         var mode = document.querySelector('#dms [selected]').textContent;
         if (modes.indexOf(mode) == -1) throw new Error('Unknown display mode');
         return mode;
-      } // 搜索结果为空时返回-1
+      } // 页码从0开始
 
 
       function getCurPage() {
         var link = document.querySelector('.ptt .ptds > a');
-        return link ? getPageNum(link.href) : -1;
-      } // 搜索结果为空时返回-1
+        var page = link ? getPageNum(link.href) : -1;
+        if (page === -1) throw new Error('Can not get current page number');
+        return page;
+      } // 页码从0开始
 
 
       function getMaxPage() {
@@ -58,7 +71,7 @@ function () {
         var len = links.length;
         var isLast = !document.querySelector('.ptt td:last-child > a'); // 根据下一页的td中有没有a元素判断
 
-        if (len === 0) return -1;
+        if (len === 0) throw new Error('Can not get maximum page number');
         if (isLast) return getPageNum(links[len - 1].href);else return getPageNum(links[len - 2].href);
       }
 
@@ -175,6 +188,13 @@ function () {
           case 'Thumbnail':
             return getThumbnailModeResults();
         }
+      }
+
+      if (noPaging) {
+        return {
+          mode: getDisplayMode(),
+          results: getResults()
+        };
       }
 
       return _objectSpread({
