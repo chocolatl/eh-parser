@@ -42,7 +42,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 
 ## API
 
-### EHParser.parseSearchPage(document)
+### EHParser.parseSearchPage(document, noPaging?)
 
 解析搜索结果页面数据，如：https://exhentai.org
 
@@ -70,7 +70,9 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 }
 ```
 
-注意：搜索结果为空（'No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'等情况）时会解析失败抛出异常
+如果`noPaing`参数传入`true`，那么返回对象中将仅包含`mode`和`results`字段。该选项用于获取无分页器的搜索页面，如`/popular`
+
+注意：搜索结果为空（'No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'...）时也会抛出异常
 
 ### EHParser.parseGalleryPage(document)
 
@@ -185,10 +187,6 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
   const imagePageURL = 'https://exhentai.org/s/594b7edc82/1183625-31';
   const reloadURL    = imagePageURL + (imagePageURL.indexOf('?') > -1 ? '&' : '?') + 'nl=' + reloadCode;
 ```
-
-## 异常
-
-解析过程中如果出现错误会抛出`TypeError`异常
 
 ## 许可证
 
