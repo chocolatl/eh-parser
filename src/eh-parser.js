@@ -4,7 +4,7 @@ class EHParser {
    * @param {object} document 搜索结果页面的document对象
    * @return {object}
    */
-  static parseSearchPage(document) {
+  static parseSearchPage(document, noPaging = false) {
     const messages = ['No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'];
 
     for (const msg of messages) {
@@ -133,6 +133,13 @@ class EHParser {
         case 'Thumbnail':
           return getThumbnailModeResults();
       }
+    }
+
+    if (noPaging) {
+      return {
+        mode: getDisplayMode(),
+        results: getResults()
+      };
     }
 
     return {
