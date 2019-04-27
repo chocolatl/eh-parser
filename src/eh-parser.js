@@ -25,20 +25,22 @@ class EHParser {
       return mode;
     }
 
-    // 搜索结果为空时返回-1
+    // 页码从0开始
     function getCurPage() {
       const link = document.querySelector('.ptt .ptds > a');
-      return link ? getPageNum(link.href) : -1;
+      const page = link ? getPageNum(link.href) : -1;
+
+      if (page === -1) throw new Error('Can not get current page number');
+      return page;
     }
 
-    // 搜索结果为空时返回-1
+    // 页码从0开始
     function getMaxPage() {
       const links = document.querySelectorAll('.ptt a');
       const len = links.length;
       const isLast = !document.querySelector('.ptt td:last-child > a');   // 根据下一页的td中有没有a元素判断
   
-      if (len === 0) return -1;
-
+      if (len === 0) throw new Error('Can not get maximum page number');
       if (isLast) return getPageNum(links[len - 1].href);
       else return getPageNum(links[len - 2].href);
     }
