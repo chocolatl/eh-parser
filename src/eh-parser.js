@@ -5,6 +5,14 @@ class EHParser {
    * @return {object}
    */
   static parseSearchPage(document) {
+    const messages = ['No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'];
+
+    for (const msg of messages) {
+      if (document.body.textContent.includes(msg)) {
+        throw new Error(msg);
+      }
+    }
+
     const getPageNum = href => {
       const r = /(?:\?|&)?page=(\d+)/.exec(href);
       return r ? +r[1] : 0;   // 搜索结果第一页可能没有page参数，r为null
