@@ -93,7 +93,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "posted": "2018-02-11 13:05",
     "parent": "https://exhentai.org/g/1161712/7d773196aa/",
     "visible": "No (Replaced)",
-    "language": "Japanese  ",
+    "language": "Japanese",
     "fileSize": "182.2 MB",
     "length": "195 pages",
     "favorited": "368 times",

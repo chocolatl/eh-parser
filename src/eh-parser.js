@@ -186,7 +186,7 @@ class EHParser {
           posted    : getText(els[0]),
           parent    : hasHref(els[1]) ? getHref(els[1]) : null,
           visible   : getText(els[2]),
-          language  : getText(els[3]),
+          language  : getText(els[3]).trim(),
           fileSize  : getText(els[4]),
           length    : getText(els[5]),
           favorited : getText(els[6]),
