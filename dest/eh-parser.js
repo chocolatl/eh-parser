@@ -254,7 +254,7 @@ function () {
             posted: getText(els[0]),
             parent: hasHref(els[1]) ? getHref(els[1]) : null,
             visible: getText(els[2]),
-            language: getText(els[3]),
+            language: getText(els[3]).trim(),
             fileSize: getText(els[4]),
             length: getText(els[5]),
             favorited: getText(els[6])
@@ -271,13 +271,13 @@ function () {
         function getTags() {
           var els = [].slice.call(document.querySelectorAll('#taglist tr'));
           return els.map(function (el) {
-            var subclass = el.children[0].textContent.slice(0, -1);
+            var namespace = el.children[0].textContent.slice(0, -1);
             var tagEls = [].slice.call(el.children[1].querySelectorAll('a'));
             var tags = tagEls.map(function (e) {
               return e.textContent;
             });
             return {
-              subclass: subclass,
+              namespace: namespace,
               tags: tags
             };
           });
