@@ -101,11 +101,11 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "rating": 4.53,         // 平均评分
     "tags": [
       {
-        "subclass": "parody",
+        "namespace": "parody",
         "tags": ["touhou project"]
       },
       {
-        "subclass": "character",
+        "namespace": "character",
         "tags": ["youmu konpaku"]
       },
       // ...

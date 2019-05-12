@@ -203,10 +203,10 @@ class EHParser {
       function getTags() {
         const els = [].slice.call(document.querySelectorAll('#taglist tr'));
         return els.map(el => {
-          const subclass = el.children[0].textContent.slice(0, -1);
+          const namespace = el.children[0].textContent.slice(0, -1);
           const tagEls = [].slice.call(el.children[1].querySelectorAll('a'));
           const tags = tagEls.map(e => e.textContent);
-          return {subclass, tags};
+          return {namespace, tags};
         });
       }
 
