@@ -274,16 +274,21 @@ class EHParser {
       let list = [];
       const nosels = document.querySelectorAll('#gdo4 > .nosel');
       const mode = nosels[0].classList.contains('ths') ? 'normal' : 'large';
-      
+      const getFileName = img => /^Page \d+: (.*)$/.exec(img.title)[1];
+
       // normal模式下没有thumb
       if(mode === 'normal') {
         const els = [].slice.call(document.querySelectorAll('.gdtm a'));
-        list = els.map(e => ({url: e.href}));
+        list = els.map(e => ({
+          url: e.href,
+          fileName: getFileName(e.children[0])
+        }));
       } else {
         const els = [].slice.call(document.querySelectorAll('.gdtl a'));
         list = els.map(e => ({
           url: e.href,
-          thumb: e.children[0].src
+          thumb: e.children[0].src,
+          fileName: getFileName(e.children[0])
         }));
       }
       

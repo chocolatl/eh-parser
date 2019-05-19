@@ -149,11 +149,13 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "list": [
       {
         "url": "https://exhentai.org/s/051cedd008/1183625-1",
-        "thumb": "https://ehgt.org/05/1c/051cedd0089ebce224b14ccc98ba89d67ff3f284-954244-800-1119-jpg_l.jpg"    // thumb仅在mode为"large"时存在
+        "thumb": "https://ehgt.org/05/1c/051cedd0089ebce224b14ccc98ba89d67ff3f284-954244-800-1119-jpg_l.jpg",    // thumb仅在mode为"large"时存在
+        "fileName": "001.jpg"
       },
       {
         "url": "https://exhentai.org/s/11286cf784/1183625-2",
-        "thumb": "https://ehgt.org/11/28/11286cf7840f1726cdda95f619aaacd7d5a1f9fex1190142-800-1125-jpg_l.jpg"
+        "thumb": "https://ehgt.org/11/28/11286cf7840f1726cdda95f619aaacd7d5a1f9fex1190142-800-1125-jpg_l.jpg",
+        "fileName": "002.jpg"
       },
       // ...
     ]

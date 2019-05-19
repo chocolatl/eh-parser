@@ -31,6 +31,7 @@ function () {
     /**
      * 解析搜索结果页面数据
      * @param {object} document 搜索结果页面的document对象
+     * @param {boolean} noPaging 为true时不解析分页信息
      * @return {object}
      */
     value: function parseSearchPage(document) {
@@ -360,13 +361,19 @@ function () {
       function getImageList() {
         var list = [];
         var nosels = document.querySelectorAll('#gdo4 > .nosel');
-        var mode = nosels[0].classList.contains('ths') ? 'normal' : 'large'; // normal模式下没有thumb
+        var mode = nosels[0].classList.contains('ths') ? 'normal' : 'large';
+
+        var getFileName = function getFileName(img) {
+          return /^Page \d+: (.*)$/.exec(img.title)[1];
+        }; // normal模式下没有thumb
+
 
         if (mode === 'normal') {
           var els = [].slice.call(document.querySelectorAll('.gdtm a'));
           list = els.map(function (e) {
             return {
-              url: e.href
+              url: e.href,
+              fileName: getFileName(e.children[0])
             };
           });
         } else {
@@ -375,7 +382,8 @@ function () {
           list = _els.map(function (e) {
             return {
               url: e.href,
-              thumb: e.children[0].src
+              thumb: e.children[0].src,
+              fileName: getFileName(e.children[0])
             };
           });
         }
