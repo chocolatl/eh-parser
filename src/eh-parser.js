@@ -2,6 +2,7 @@ class EHParser {
   /**
    * 解析搜索结果页面数据
    * @param {object} document 搜索结果页面的document对象
+   * @param {boolean} noPaging 为true时不解析分页相关信息
    * @return {object}
    */
   static parseSearchPage(document, noPaging = false) {
