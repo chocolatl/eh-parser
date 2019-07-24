@@ -149,7 +149,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "list": [
       {
         "url": "https://exhentai.org/s/051cedd008/1183625-1",
-        "thumb": "https://ehgt.org/05/1c/051cedd0089ebce224b14ccc98ba89d67ff3f284-954244-800-1119-jpg_l.jpg",    // thumb仅在mode为"large"时存在
+        "thumb": "https://ehgt.org/05/1c/051cedd0089ebce224b14ccc98ba89d67ff3f284-954244-800-1119-jpg_l.jpg",
         "fileName": "001.jpg"
       },
       {
@@ -168,6 +168,25 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "apikey": ""
   }
 }
+```
+
+模式为`normal`时的`imageList`字段：
+
+```js
+{
+  "mode": "normal",
+  "list": [
+    {
+      "sprites": "https://exhentai.org/m/001183/1183625-00.jpg",   // CSS Sprites，通过w、h、x、y可以计算出缩略图位置
+      "w": "100px",
+      "h": "140px",
+      "x": "0px",
+      "y": "0px",
+      "url": "https://exhentai.org/s/051cedd008/1183625-1",
+      "fileName": "001.jpg"
+    },
+    // ...
+  ]
 ```
 
 文件大小等字段与网页显示结果一致，意味着不是一个精确的数值，如果需要精确的数值可以调用[官方API](https://ehwiki.org/wiki/API)获取
