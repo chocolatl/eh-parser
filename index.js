@@ -295,6 +295,23 @@ class EHParser {
       return {mode, list};
     }
 
+    function getApiInfo() {
+      const els = [].slice.call(document.querySelectorAll('script'));
+      const info = {};
+      for (const el of els) {
+        let result = null;
+        const regex = /var (api_url|gid|token|apiuid|apikey) = "?(.*?)"?;/g;
+        while (result = regex.exec(el.textContent)) {
+          const [, key, value] = result;
+          key === 'api_url' ? 
+            info.url = value : 
+            info[key] = value
+          ;
+        }
+      }
+      return info;
+    }
+
     return {
       curPage: getCurPage(),   // 当前页码，页码从0开始
       maxPage: getMaxPage(),   // 最大页码，页码从0开始
@@ -308,7 +325,9 @@ class EHParser {
       ...getcomments(),
 
       // 本页的图片列表
-      imageList: getImageList()
+      imageList: getImageList(),
+
+      apiInfo: getApiInfo()
     }
   }
 
