@@ -196,8 +196,8 @@ class EHParser {
   
       function getRating() {
         return {
-          ratingCount: +document.getElementById('rating_count').textContent,
-          rating: +document.getElementById('rating_label').textContent.replace('Average: ', '')
+          ratingCount: +document.getElementById('rating_count').textContent || 0,
+          rating: +document.getElementById('rating_label').textContent.replace('Average: ', '') || 0
         }
       }
   
