@@ -79,7 +79,8 @@ class EHParser {
         const category = el.querySelector('td:nth-of-type(1) > div').textContent;
         const posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
         const rating = getRating(el.querySelector('.ir'));
-        const uploader = el.querySelector('td:last-of-type > div:first-of-type').textContent;
+        const isFavorites = !!document.querySelector('.fp.fps');
+        const uploader = isFavorites ? '' : el.querySelector('td:last-of-type > div:first-of-type').textContent;   // 这三种模式下的收藏页面没有uploader信息
 
         return {title, posted, url, cover, category, rating, uploader};
       });
