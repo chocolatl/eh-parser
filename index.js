@@ -111,7 +111,7 @@ class EHParser {
       const items = [].slice.call(document.querySelectorAll('.itg > div'));
 
       return items.map(el => {
-        const url   = el.children[0].href;
+        const url   = el.querySelector('.gl3t > a').href;
         const title = el.children[0].textContent;
         const cover = el.querySelector('.gl3t img').src;
         const category = el.querySelector('.gl5t .cs').textContent;
