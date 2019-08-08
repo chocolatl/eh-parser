@@ -50,7 +50,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 
 ```js
 {
-  "mode": "Minimal+",
+  "mode": "Minimal+",   // Minimal, Minimal+, Compact, Extended, Thumbnail 之一，获取失败时为Unknown
   "curPage": 0,         // 当前页码，页码从0开始
   "maxPage": 25310,     // 最大页码，页码从0开始
   "prev": null,         // 搜索结果的上一页链接

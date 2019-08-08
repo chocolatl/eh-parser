@@ -23,10 +23,14 @@ class EHParser {
     };
 
     function getDisplayMode() {
-      const modes = ['Minimal', 'Minimal+', 'Compact', 'Extended', 'Thumbnail'];
-      const mode = document.querySelector('#dms [selected]').textContent;
-      if(modes.indexOf(mode) == -1) throw new Error('Unknown display mode');
-      return mode;
+      try {
+        const modes = ['Minimal', 'Minimal+', 'Compact', 'Extended', 'Thumbnail'];
+        const mode = document.querySelector('#dms [selected]').textContent;
+        if(modes.indexOf(mode) == -1) throw new Error('Unknown display mode');
+        return mode;
+      } catch (err) {
+        return 'Unknown';
+      }
     }
 
     // 页码从0开始
@@ -150,6 +154,8 @@ class EHParser {
           return getExtendedModeResults();
         case 'Thumbnail':
           return getThumbnailModeResults();
+        default:
+          return [];
       }
     }
 
