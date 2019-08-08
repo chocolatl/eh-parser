@@ -70,6 +70,25 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 }
 ```
 
+解析`/favorites`页面会得到一个额外的`favoritesInfo`字段，包含以下内容：
+
+```js
+{
+  "order": "favorited",      // 排序方式：favorited或posted
+  "dirs": [
+    {
+      "num": 49,             // 收藏数
+      "name": "Favorites 0"  // 收藏夹名
+    },
+    {
+      "num": 0,
+      "name": "Favorites 1"
+    }
+  ],
+  "current": -1              // 当前显示的收藏夹，对应dirs数组的序号，-1表示Show All Favorites
+}
+```
+
 如果`noPaing`参数传入`true`，那么返回对象中将仅包含`mode`和`results`字段。该选项用于获取无分页器的搜索页面，如`/popular`
 
 注意：搜索结果为空（'No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'...）时也会抛出异常

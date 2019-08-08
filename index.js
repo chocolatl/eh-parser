@@ -126,6 +126,20 @@ class EHParser {
       });
     }
 
+    // 获取收藏页面的排序方式和收藏夹信息
+    function getFavoritesPageInfo() {
+      const dirEls = [].slice.call(document.querySelectorAll('.fp:not(:last-child)'));   // 最后一个.fp是Show All Favorites
+      const current = dirEls.findIndex(e => e.classList.contains('fps'));    // 返回当前目录序号，-1表示当前目录是Show All Favorites
+      const dirs = dirEls.map(e => {
+        const num = +e.children[0].textContent;
+        const name = e.children[e.children.length - 1].textContent;
+        return {num, name}
+      });
+      const linkEls = [].slice.call(document.querySelectorAll('a'));
+      const order = linkEls.find(e => e.href.includes('inline_set=fs_f')) ? 'posted' : 'favorited';
+      return {order, dirs, current};
+    }
+
     function getResults() {
       switch(displayMode) {
         case 'Minimal':
@@ -151,7 +165,8 @@ class EHParser {
       curPage: getCurPage(),  // 当前页码，页码从0开始
       maxPage: getMaxPage(),  // 最大页码，页码从0开始
       ...getPrevNextLink(),   // prev, next
-      results: getResults()   // 当前页面搜索结果
+      results: getResults(),  // 当前页面搜索结果
+      ...(isFavorites && {favoritesInfo: getFavoritesPageInfo()})
     };
   }
 
