@@ -60,10 +60,10 @@ class EHParser {
 
     // 根据星星图片获取大致的评分
     function getRating(el) {
-        const pos = el.style.backgroundPosition;
-        const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
-        const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
-        return rating;
+      const pos = el.style.backgroundPosition;
+      const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
+      const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
+      return rating;
     }
 
     function getListModeCover(el) {
