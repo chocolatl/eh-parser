@@ -155,7 +155,7 @@ class EHParser {
         case 'Thumbnail':
           return getThumbnailModeResults();
         default:
-          return [];
+          throw new Error('Unknown display mode')
       }
     }
 
