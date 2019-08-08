@@ -7,13 +7,7 @@ class EHParser {
    */
   static parseSearchPage(document, noPaging = false) {
     const messages = ['No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'];
-
-    for (const msg of messages) {
-      if (document.body.textContent.includes(msg)) {
-        throw new Error(msg);
-      }
-    }
-
+    const isEmpty = messages.some(msg => document.body.textContent.includes(msg));
     const displayMode = getDisplayMode();
     const isFavorites = !!document.querySelector('.fp.fps');
 
@@ -162,16 +156,16 @@ class EHParser {
     if (noPaging) {
       return {
         mode: displayMode,
-        results: getResults()
+        results: isEmpty ? [] : getResults()
       };
     }
 
     return {
       mode: displayMode,
-      curPage: getCurPage(),  // 当前页码，页码从0开始
-      maxPage: getMaxPage(),  // 最大页码，页码从0开始
-      ...getPrevNextLink(),   // prev, next
-      results: getResults(),  // 当前页面搜索结果
+      curPage: isEmpty ? 0 : getCurPage(),    // 当前页码，页码从0开始
+      maxPage: isEmpty ? 0 : getMaxPage(),    // 最大页码，页码从0开始
+      results: isEmpty ? [] : getResults(),   // 当前页面搜索结果
+      ...(isEmpty ? {prev: null, next: null} : getPrevNextLink()),   // prev, next
       ...(isFavorites && {favoritesInfo: getFavoritesPageInfo()})
     };
   }

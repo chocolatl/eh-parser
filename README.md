@@ -91,8 +91,6 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 
 如果`noPaing`参数传入`true`，那么返回对象中将仅包含`mode`和`results`字段。该选项用于获取无分页器的搜索页面，如`/popular`
 
-注意：搜索结果为空（'No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'...）时也会抛出异常
-
 ### EHParser.parseGalleryPage(document)
 
 解析画廊页面数据，如：https://exhentai.org/g/1183625/18725a8da6
