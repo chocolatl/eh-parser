@@ -14,6 +14,9 @@ class EHParser {
       }
     }
 
+    const displayMode = getDisplayMode();
+    const isFavorites = !!document.querySelector('.fp.fps');
+
     const getPageNum = href => {
       const r = /(?:\?|&)?page=(\d+)/.exec(href);
       return r ? +r[1] : 0;   // 搜索结果第一页可能没有page参数，r为null
@@ -79,7 +82,6 @@ class EHParser {
         const category = el.querySelector('td:nth-of-type(1) > div').textContent;
         const posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
         const rating = getRating(el.querySelector('.ir'));
-        const isFavorites = !!document.querySelector('.fp.fps');
         const uploader = isFavorites ? '' : el.querySelector('td:last-of-type > div:first-of-type').textContent;   // 这三种模式下的收藏页面没有uploader信息
 
         return {title, posted, url, cover, category, rating, uploader};
@@ -125,7 +127,7 @@ class EHParser {
     }
 
     function getResults() {
-      switch(getDisplayMode()) {
+      switch(displayMode) {
         case 'Minimal':
         case 'Minimal+':
         case 'Compact':
@@ -139,13 +141,13 @@ class EHParser {
 
     if (noPaging) {
       return {
-        mode: getDisplayMode(),
+        mode: displayMode,
         results: getResults()
       };
     }
 
     return {
-      mode: getDisplayMode(),
+      mode: displayMode,
       curPage: getCurPage(),  // 当前页码，页码从0开始
       maxPage: getMaxPage(),  // 最大页码，页码从0开始
       ...getPrevNextLink(),   // prev, next
