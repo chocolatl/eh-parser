@@ -227,7 +227,7 @@ class EHParser {
           language  : getText(els[3]).trim(),
           fileSize  : getText(els[4]),
           length    : getText(els[5]),
-          favorited : getText(els[6]),
+          favorited : getText(els[6])
         };
       }
   
@@ -238,6 +238,16 @@ class EHParser {
         }
       }
   
+      function getFavoriteInfo() {
+        const el = document.querySelector('#fav .i');
+        if (!el) return null;
+        const style = el.getAttribute('style');
+        const [, y] = /background-position:0px -(\d*?)px;/.exec(style);
+        const dir = (y - 2) / 19;
+        const name = el.title;
+        return {dir, name};
+      }
+
       function getTags() {
         const els = [].slice.call(document.querySelectorAll('#taglist tr'));
         return els.map(el => {
@@ -258,6 +268,7 @@ class EHParser {
         uploader: document.querySelector('#gdn > a').textContent,
         ...getBaseInfo(),
         ...getRating(),
+        favorite: getFavoriteInfo(),
         tags: getTags()
       }
     }

@@ -117,6 +117,10 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "language": "Japanese",
     "fileSize": "182.2 MB",
     "length": "195 pages",
+    "favorite": {           // 收藏信息，如果没有收藏该画廊则为null
+      dir: 0,               // 收藏夹序号 0-9
+      name: "Favorites 0"   // 收藏夹名
+    },
     "favorited": "368 times",
     "ratingCount": 76,      // 评分人数
     "rating": 4.53,         // 平均评分
