@@ -63,7 +63,11 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
       "cover": "https://exhentai.org/t/60/8f/608f41dd673776c1a47c0ca70275f98342c6884f-2697059-2116-3000-jpg_l.jpg",
       "category": "Doujinshi",
       "rating": 4.5,     // 评分精度为0.5
-      "uploader": "BlossomPlus"     // 该字段在Thumbnail模式下为空字符串
+      "uploader": "BlossomPlus" ,   // 该字段在Thumbnail模式下为空字符串
+      "favorite": {           // 收藏信息，如果没有收藏该画廊则为null
+        dir: 0,               // 收藏夹序号 0-9
+        name: "Favorites 0"   // 收藏夹名
+      }
     },
     // ...
   ]

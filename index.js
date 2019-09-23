@@ -69,6 +69,18 @@ class EHParser {
       return thumb.getAttribute('data-src') || thumb.getAttribute('src')
     }
 
+    function getFavoriteInfo(el) {
+      const style = el.getAttribute('style');
+      if (!style) return null;
+      const result = /border-color:(.*?);/.exec(style);
+      if (!result) return null;
+      const color = result[1];
+      const dirsColor = ['#000','#f00','#fa0','#dd0','#080','#9f4','#4bf','#00f','#508','#e8e'];
+      const dir = dirsColor.findIndex(e => e === color);
+      const name = el.getAttribute('title');
+      return {dir, name};
+    }
+
     // 获取Minimal、Minimal+、Compact模式下的搜索结果
     function getListModeResults() {
       const items = [].slice.call(document.querySelectorAll('.itg tr')).slice(1);
@@ -78,11 +90,15 @@ class EHParser {
         const title = el.querySelector('.glname > a > div:first-of-type').textContent;
         const cover = getListModeCover(el);
         const category = el.querySelector('td:nth-of-type(1) > div').textContent;
-        const posted = el.querySelector('td:nth-of-type(2) > div:last-of-type').textContent;
+        const postedEl = displayMode !== 'Compact'
+          ? el.querySelector('td:nth-of-type(2) > div:last-of-type')
+          : el.querySelector('td:nth-of-type(2) > div:last-of-type').children[0]
+        ;
+        const posted = postedEl.textContent;
         const rating = getRating(el.querySelector('.ir'));
         const uploader = isFavorites ? '' : el.querySelector('td:last-of-type > div:first-of-type').textContent;   // 这三种模式下的收藏页面没有uploader信息
-
-        return {title, posted, url, cover, category, rating, uploader};
+        const favorite = getFavoriteInfo(postedEl);
+        return {title, posted, url, cover, category, rating, uploader, favorite};
       });
     }
 
@@ -102,8 +118,9 @@ class EHParser {
         const posted   = gl3es[1].textContent;
         const rating   = getRating(gl3es[2]);
         const uploader = gl3es[3].textContent;
+        const favorite = getFavoriteInfo(gl3es[1]);
 
-        return {title, posted, url, cover, category, rating, uploader};
+        return {title, posted, url, cover, category, rating, uploader, favorite};
       });
     }
 
@@ -116,11 +133,13 @@ class EHParser {
         const title = el.children[0].textContent;
         const cover = el.querySelector('.gl3t img').src;
         const category = el.querySelector('.gl5t .cs').textContent;
-        const posted   = el.querySelector('.gl5t .cs').nextElementSibling.textContent;
+        const postedEl = el.querySelector('.gl5t .cs').nextElementSibling;
+        const posted   = postedEl.textContent;
         const rating   = getRating(el.querySelector('.gl5t .ir'));
         const uploader = '';    // Thumbnail模式下没有uploader信息
+        const favorite = getFavoriteInfo(postedEl);
 
-        return {title, posted, url, cover, category, rating, uploader};
+        return {title, posted, url, cover, category, rating, uploader, favorite};
       });
     }
 
