@@ -127,11 +127,14 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "tags": [
       {
         "namespace": "parody",
-        "tags": ["touhou project"]
-      },
-      {
-        "namespace": "character",
-        "tags": ["youmu konpaku"]
+        "tags": [
+          {
+            name: "touhou project",   // 标签名
+            power: "100+",            // 1+、10+、100+ 详见：https://ehwiki.org/wiki/Tagging_Mechanics#Tag_Mod_Power
+            state: "normal"           // normal、upvoted、downvoted、other 详见：https://ehwiki.org/wiki/Tagging_Mechanics#Tag_Colors
+          },
+          // ...
+        ]
       },
       // ...
     ]

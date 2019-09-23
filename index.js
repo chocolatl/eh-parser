@@ -250,10 +250,24 @@ class EHParser {
 
       function getTags() {
         const els = [].slice.call(document.querySelectorAll('#taglist tr'));
+
+        const getTagState = e => {
+          if (!e.className) return 'normal';
+          if (e.className === 'tup') return 'upvoted';
+          if (e.className === 'tdn') return 'downvoted';
+          return 'other';
+        };
+        
         return els.map(el => {
           const namespace = el.children[0].textContent.slice(0, -1);
           const tagEls = [].slice.call(el.children[1].querySelectorAll('a'));
-          const tags = tagEls.map(e => e.textContent);
+          const tags = tagEls.map(e => {
+            const tagWrapCls = e.parentElement.classList;
+            const name = e.textContent;
+            const power = tagWrapCls.contains('gt') ? '100+' : (tagWrapCls.contains('gtl') ? '10+' : '1+');
+            const state = getTagState(e);
+            return {name, power, state};
+          });
           return {namespace, tags};
         });
       }
