@@ -124,6 +124,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
     "favorited": "368 times",
     "ratingCount": 76,      // 评分人数
     "rating": 4.53,         // 平均评分
+    "myRating": null,       // 我的评分
     "tags": [
       {
         "namespace": "parody",

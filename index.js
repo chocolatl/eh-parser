@@ -1,3 +1,13 @@
+class Helper {
+  // 根据显示评分的元素背景图片偏移获取大致的评分
+  static getRatingByRatingElement(el) {
+    const pos = el.style.backgroundPosition;
+    const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
+    const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
+    return rating;
+  }
+}
+
 class EHParser {
   /**
    * 解析搜索结果页面数据
@@ -10,6 +20,8 @@ class EHParser {
     const isEmpty = messages.some(msg => document.body.textContent.includes(msg));
     const displayMode = getDisplayMode();
     const isFavorites = !!document.querySelector('.fp.fps');
+
+    const getRating = Helper.getRatingByRatingElement
 
     const getPageNum = href => {
       const r = /(?:\?|&)?page=(\d+)/.exec(href);
@@ -54,14 +66,6 @@ class EHParser {
         prev: prevEl ? prevEl.href : null,
         next: nextEl ? nextEl.href : null
       };
-    }
-
-    // 根据星星图片获取大致的评分
-    function getRating(el) {
-      const pos = el.style.backgroundPosition;
-      const [, left, top] = /(\-?\d+)px (\-?\d+)px/.exec(pos);
-      const rating = 5 + left / 16 - (top === '-21' ? 0.5 : 0);
-      return rating;
     }
 
     function getListModeCover(el) {
@@ -232,8 +236,11 @@ class EHParser {
       }
   
       function getRating() {
+        const ratingImage = document.getElementById('rating_image')
+        const getMyRating = () => Helper.getRatingByRatingElement(ratingImage)
         return {
           ratingCount: +document.getElementById('rating_count').textContent || 0,
+          myRating: /ir[rgb]/.test(ratingImage.className) ? getMyRating() : null,
           rating: +document.getElementById('rating_label').textContent.replace('Average: ', '') || 0
         }
       }
