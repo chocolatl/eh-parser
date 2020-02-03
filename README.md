@@ -191,9 +191,9 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
   },
   "apiInfo": {
     "url": "https://exhentai.org/api.php",
-    "gid": "1183625",
+    "gid": 1183625,
     "token": "18725a8da6",
-    "apiuid": "",
+    "apiuid": 0,
     "apikey": ""
   }
 }

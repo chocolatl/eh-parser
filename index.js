@@ -391,6 +391,8 @@ class EHParser {
           ;
         }
       }
+      info.gid = +info.gid;
+      info.apiuid = +info.apiuid;
       return info;
     }
 
