@@ -230,7 +230,7 @@ EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E�
 {
   "image": "http://144.197.142.91:8484/h/647afa68f7a97d990f360262f0e3bab872fbd501-216944-900-900-jpg/keystamp=1543465500-a9c0673140;fileindex=24684240;xres=2400/Masterpiece.jpg",
   "original": "https://exhentai.org/fullimg.php?gid=1316052&page=3&key=0cz2qum96tg",    // 原图下载链接，不存在时为null
-  "next": "https://exhentai.org/s/eeda3df9cf/1316052-4",                                // 下一张图片的页面
+  "next": "https://exhentai.org/s/eeda3df9cf/1316052-4",                                // 下一张图片的页面，最后一张时为null
   "curPage": 4,     // 当前页码，页码从1开始
   "maxPage": 220,   // 最大页码，页码从1开始
   "reloadCode": "23626-428740",
