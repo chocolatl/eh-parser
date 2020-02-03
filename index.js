@@ -421,10 +421,6 @@ class EHParser {
    * @return {object}
    */
   static parsePicturePage(document) {
-    const imageEl  = document.getElementById('img');
-    const image = imageEl.src;
-    const next  = imageEl.parentElement.href;
-
     const originalEl  = document.querySelector('#i7 a');
     const original = originalEl && originalEl.href;    // originalURL可能不存在，这时值为null
 
@@ -435,7 +431,11 @@ class EHParser {
 
     const imageInfoStr = document.querySelectorAll('#i2 > div')[1].textContent;
     const fileName = imageInfoStr.split(' :: ')[0];
-    
+
+    const imageEl  = document.getElementById('img');
+    const image = imageEl.src;
+    const next  = curPage === maxPage ? null : imageEl.parentElement.href;
+
     return {image, next, curPage, maxPage, reloadCode, original, fileName};
   }
 }
