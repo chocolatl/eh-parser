@@ -57,6 +57,28 @@ interface GalleryMetaData {
   }[]
 }
 
+interface LargeModeThumbList {
+  mode: 'large'
+  list: {
+    url: string
+    thumb: string
+    fileName: string
+  }[]
+}
+
+interface NormalModeThumbList {
+  mode: 'normal'
+  list: {
+    sprites: string
+    w: string
+    h: string
+    x: string
+    y: string
+    url: string
+    fileName: string
+  }[]
+}
+
 export interface GalleryPageResult {
   curPage: number
   maxPage: number
@@ -77,14 +99,7 @@ export interface GalleryPageResult {
     content: string
     score: string
   }[]
-  imageList: {
-    mode: 'normal' | 'large'
-    list: {
-      url: string
-      thumb: string
-      fileName: string
-    }[]
-  }
+  imageList: LargeModeThumbList | NormalModeThumbList
   apiInfo: {
     url: string
     gid: number
