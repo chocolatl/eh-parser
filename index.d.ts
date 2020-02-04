@@ -25,6 +25,14 @@ export interface SearchPageResult {
   prev: string | null
   next: string | null
   results: SearchResultItem[]
+  favoritesInfo?: {
+    order: 'favorited' | 'posted'
+    dirs: {
+      num: number
+      name: string
+    }[]
+    current: number
+  }
 }
 
 interface GalleryMetaData {
@@ -120,6 +128,10 @@ export interface PicturePageResult {
 }
 
 namespace EHParser {
+  export function parseSearchPage(
+    document: Document,
+    noPaging: true
+  ): Pick<SearchPageResult, 'mode' | 'results'>
   export function parseSearchPage(
     document: Document,
     noPaging?: boolean
