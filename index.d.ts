@@ -50,7 +50,7 @@ interface GalleryMetaData {
   favorite: {
     dir: number
     name: string
-  }
+  } | null
   favorited: string
   ratingCount: number
   rating: number
