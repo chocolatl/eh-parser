@@ -127,7 +127,7 @@ export interface PicturePageResult {
   fileName: string
 }
 
-namespace EHParser {
+declare namespace EHParser {
   export function parseSearchPage(
     document: Document,
     noPaging: true
