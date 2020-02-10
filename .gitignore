@@ -8,5 +8,8 @@ yarn-error.log*
 # Dependency directories
 node_modules/
 
+# VSCode
+.vscode/
+
 # Distribution
 dist/
