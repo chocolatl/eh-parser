@@ -1,0 +1,14 @@
+{
+  "include": ["./src"],
+  "exclude": [],
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es6",
+    "allowJs": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": true,
+    "strict": true
+  }
+}
