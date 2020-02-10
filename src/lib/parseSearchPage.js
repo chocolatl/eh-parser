@@ -1,11 +1,5 @@
 import Helper from './helper';
 
-/**
- * 解析搜索结果页面数据
- * @param {object} document 搜索结果页面的document对象
- * @param {boolean} noPaging 为true时不解析分页相关信息
- * @return {object}
- */
 function parseSearchPage(document, noPaging = false) {
   const messages = ['No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'];
   const isEmpty = messages.some(msg => document.body.textContent.includes(msg));

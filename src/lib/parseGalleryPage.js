@@ -1,10 +1,5 @@
 import Helper from './helper';
 
-/**
- * 解析画廊页面数据
- * @param {object} document 画廊页面的document对象
- * @return {object}
- */
 function parseGalleryPage(document) {
   const getPageNum = href => {
     const r = /(?:\?|&)?p=(\d+)/.exec(href);

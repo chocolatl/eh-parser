@@ -1,8 +1,3 @@
-/**
- * 解析图片页面数据
- * @param {object} document 图片页面的document对象
- * @return {object}
- */
 function parsePicturePage(document) {
   const originalEl  = document.querySelector('#i7 a');
   const original = originalEl && originalEl.href;    // originalURL可能不存在，这时值为null
