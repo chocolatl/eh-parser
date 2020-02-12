@@ -2,13 +2,16 @@
 
 ## 使用
 
-在浏览器环境中`eh-parser.js`将导出全局变量`window.EHParser`，在Node.js中将导出为CommonJS模块
+```
+npm install eh-parser --save
+```
 
 ### 浏览器
 
 EHParser通过解析DOM对象的文档节点获取数据，假设现在处于E站搜索结果页面，可以插入以下代码获取搜索数据：
 
 ```js
+  const EHParser = require('eh-parser');
   const data = EHParser.parseSearchPage(document);
   console.log(data);
 ```
