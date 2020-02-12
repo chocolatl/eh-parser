@@ -1,3 +1,7 @@
+/**
+ * @param {*} document 
+ * @return {*}
+ */
 function parsePicturePage(document) {
   const originalEl  = document.querySelector('#i7 a');
   const original = originalEl && originalEl.href;    // originalURL可能不存在，这时值为null

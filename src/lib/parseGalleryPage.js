@@ -1,5 +1,9 @@
 import Helper from './helper';
 
+/**
+ * @param {*} document 
+ * @return {*}
+ */
 function parseGalleryPage(document) {
   const getPageNum = href => {
     const r = /(?:\?|&)?p=(\d+)/.exec(href);

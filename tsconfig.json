@@ -1,11 +1,9 @@
 {
-  "include": ["./src"],
   "compilerOptions": {
     "target": "es6",
-    "module": "ESNext",
+    "module": "CommonJS",
     "allowJs": true,
     "declaration": true,
-    "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "removeComments": true,

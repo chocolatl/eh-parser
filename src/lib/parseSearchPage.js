@@ -1,5 +1,10 @@
 import Helper from './helper';
 
+/**
+ * @param {*} document
+ * @param {*} noPaging
+ * @return {*}
+ */
 function parseSearchPage(document, noPaging = false) {
   const messages = ['No hits found', 'No unfiltered results in this page range. You either requested an invalid page or used too aggressive filters'];
   const isEmpty = messages.some(msg => document.body.textContent.includes(msg));
